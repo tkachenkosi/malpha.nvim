@@ -47,7 +47,7 @@ local function load_path()
 		local session =	vim.fn.expand(string.sub(line, 3))
     if file_exists(session..config.session_name) then
 			vim.cmd("cd "..session)
-			vim.cmd("so .session")
+			vim.cmd("so "..string.sub(config.session_name, 2))
 		end
 	elseif f == "~" or f == "/" then
 		local file = vim.fn.expand(line)
@@ -188,17 +188,15 @@ end
 
 function M.setup(options)
 	options = options or {}
-
-	-- Обновляем конфигурацию с пользовательскими настройками
 	config.count_recent = options.count_recent or config.count_recent
 	config.session_name = options.session_name or config.session_name
 
-	-- Обновляем pinned файлы, если они предоставлены
+	-- обновляем pinned файлы, если они предоставлены
 	if options.pinned then
 		config.pinned = options.pinned
 	end
 
-	-- Можно добавить валидацию значений
+	-- валидаця
 	if config.count_recent < 10 then
 		config.count_recent = 10
 		vim.notify("count_recent не может быть меньше 10", vim.log.levels.WARN)
