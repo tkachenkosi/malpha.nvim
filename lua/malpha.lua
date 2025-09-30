@@ -205,6 +205,22 @@ function M.setup(options)
 	end
 end
 
+function M.enable_autostart()
+	local group = vim.api.nvim_create_augroup("malpha.nvim", { clear = true })
+
+	vim.api.nvim_create_autocmd("VimEnter", {
+		group = group,
+		callback = function()
+			-- Запускаем только если:
+			-- - Нет аргументов командной строки
+			-- - Не восстанавливается сессия
+			if vim.fn.argc() == 0 and vim.v.this_session == "" then
+					M.open()
+			end
+		end
+	})
+end
+
 -- для настройки
 -- vim.keymap.set('n', '<F9>', function() M.open() end, {})
 return M
