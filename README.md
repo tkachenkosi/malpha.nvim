@@ -14,10 +14,35 @@ Example contents of the session list file:
 
 The third list is configurable links to necessary files.
 
+Example:
+```
+© Start screen
+
+[n] New file
+
+~/js/svelte/money/index.html
+~/js/svelte/money/src/tools/confirm.css
+~/nvim/mbuffers.nvim/README.md
+~/.config/nvim/lua/core/configs.lua
+
+: ~/nvim/malpha.nvim
+: ~/js/svelte/books
+: ~/go/src/money
+: ~/js/svelte/money
+: ~/js/svelte/demo
+
+[c] ~/.config/nvim/lua/core/configs.lua
+[m] ~/.config/nvim/lua/core/mappings.lua
+[l] ~/.config/nvim/lua/core/lsp.lua
+[s] ~/.config/nvim/.session
+<End start page>
+```
+
 ---
 #### Installation and Usage:
 ```
 DEFAULT_OPTIONS:
+title = "Start screen nvim by © Tkachenkosi. 2025"
 count_recent = 20,           -- Показывать только 20 последних файлов
 session_name = "/.mysession", -- Использовать другое имя файла сессии
 	pinned = {
@@ -35,6 +60,7 @@ return {
 	"tkachenkosi/malpha.nvim",
 	config = function()
 			require("malpha").setup({
+                title = "Start screen",
 				count_recent = 15,
 			})
 			require("malpha").enable_autostart()

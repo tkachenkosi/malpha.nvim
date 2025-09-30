@@ -18,6 +18,7 @@ local M = {}
 
 -- Значения по умолчанию
 local config = {
+	title = "Start screen nvim by © Tkachenkosi. 2025",
 	count_recent = 20,
 	session_name = "/.session",
 	pinned = {
@@ -75,7 +76,7 @@ function M.open()
   local lines = {}
 
   --  Заголовок
-  table.insert(lines, "© Config for nvim by Tkachenkosi. 2025")
+  table.insert(lines, config.title)
   table.insert(lines, "")
 
   --  Новая сессия
@@ -188,6 +189,7 @@ end
 
 function M.setup(options)
 	options = options or {}
+	config.title = options.title or config.title
 	config.count_recent = options.count_recent or config.count_recent
 	config.session_name = options.session_name or config.session_name
 

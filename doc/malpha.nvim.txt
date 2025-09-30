@@ -2,6 +2,7 @@ Installation and Usage:
 
 
 DEFAULT_OPTIONS:
+title = "Start screen nvim by © Tkachenkosi. 2025"
 count_recent = 20,           -- Показывать только 20 последних файлов
 session_name = "/.mysession", -- Использовать другое имя файла сессии
 	pinned = {
@@ -18,6 +19,7 @@ return {
 	"tkachenkosi/malpha.nvim",
 	config = function()
 			require("malpha").setup({
+        title = "Start screen",
 				count_recent = 15,
 			})
 			require("malpha").enable_autostart()
