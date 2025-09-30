@@ -89,12 +89,6 @@ function M.open()
   end
   table.insert(lines, "")
 
-  -- Закреплённые
-  for _, file in ipairs(config.pinned) do
-    table.insert(lines, string.format("[%s] %s", file[1], file[2]))
-  end
-  table.insert(lines, "")
-
 	-- Открываем файл сессий для чтения
 	local file = io.open(vim.fn.expand("~/.config/nvim"..config.session_name), "r")
 	if file then
@@ -105,6 +99,12 @@ function M.open()
 	else
 			table.insert(lines, "Ошибка: открытия файла для чтения "..config.session_name)
 	end
+  table.insert(lines, "")
+
+  -- Закреплённые
+  for _, file in ipairs(config.pinned) do
+    table.insert(lines, string.format("[%s] %s", file[1], file[2]))
+  end
   table.insert(lines, "<End start page>")
 
 	-- Добавляем строки ---
