@@ -103,8 +103,8 @@ function M.open()
   table.insert(lines, "")
 
   -- Закреплённые
-  for _, file in ipairs(config.pinned) do
-    table.insert(lines, string.format("[%s] %s", file[1], file[2]))
+  for _, pin in ipairs(config.pinned) do
+    table.insert(lines, string.format("[%s] %s", pin[1], pin[2]))
   end
   table.insert(lines, "<End start page>")
 
