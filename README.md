@@ -2,39 +2,42 @@
 ---
 #### Installation and Usage:
 ```
-vim.keymap.set({'n', 'i'}, '<F12>', function() require('mbuffers').start(); end)
-vim.keymap.set('n', '<leader><F12>', function() require('msession').start(); end)
-
-
 {
-"tkachenkosi/mbuffers.nvim",
+"tkachenkosi/malpha.nvim",
 config = function()
-	require("mbuffers").setup({
-		width_win = 0,
+	require("malpha").setup({
+        count_recent = 15,           -- Показывать только 15 последних файлов
+        session_name = "/.mysession", -- Использовать другое имя файла сессии
+        pinned = {                    -- Свои закреплённые файлы
+            {"c", "~/.config/nvim/init.lua"},
+            {"p", "~/.config/nvim/lua/plugins.lua"},
+            {"s", "~/.config/nvim/.session"},
+        }
 	})
 end,
 }
 
-DEFAULT_OPTIONS = {
-width_win = 0,				-- the width of the window, if = 0 is calculated
-color_cursor_line = "#2b2b2b",		-- the color of the line highlight with the cursor
-color_cursor_mane_line = "#2b2b2b",	-- the color of the line highlight in the main editor
-color_light_path = "#ada085",	   	-- the color of the path selection from the file name
-color_light_filter = "#224466",		-- the color of the filter input line
+DEFAULT_OPTIONS:
+count_recent = 15,           -- Показывать только 15 последних файлов
+session_name = "/.mysession", -- Использовать другое имя файла сессии
+pinned = {                    -- Свои закреплённые файлы
+    {"c", "~/.config/nvim/init.lua"},
+    {"p", "~/.config/nvim/lua/plugins.lua"},
+    {"s", "~/.config/nvim/.session"},
 }
+
+
+В файле <init.lua> добовляем команды:
+local startscreen = require("malpha.nvim")
+
+startscreen.setup({
+    count_recent = 20,
+    -- ваши настройки
+})
+
+startscreen.enable_autostart()
 ```
 #### Keys in the buffer list window:
-Esc, q      - close the buffer manager window
+q      - close start screen and quit nvim
+CR     - open the selected buffer
 
-f, c-Up, Up - and switch to the filter input line
-
-CR          - open the selected buffer
-
-#### Keys in the filter input window:
-Esc         - close the buffer manager window
-
-CR, Down    - go to the buffer list window
-
-#### Command:
-
-|:StartMbuffers|
