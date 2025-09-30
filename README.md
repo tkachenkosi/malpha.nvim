@@ -7,9 +7,10 @@ The first type is previously opened files.
 The second list is sessions. These are project directories that contain a saved nvim session file.
 The session list is stored in a text file in the ~/.config/nvim/ directory, for example, the .session file, and is filled in manually.
 Example contents of the session list file:
-
+```
 ~/js/svelte/books
 ~/js/svelte/demo
+```
 
 The third list is configurable links to necessary files.
 
