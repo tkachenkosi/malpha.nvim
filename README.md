@@ -18,7 +18,7 @@ The third list is configurable links to necessary files.
 #### Installation and Usage:
 ```
 DEFAULT_OPTIONS:
-count_recent = 20,           -- Показывать только 15 последних файлов
+count_recent = 20,           -- Показывать только 20 последних файлов
 session_name = "/.mysession", -- Использовать другое имя файла сессии
 	pinned = {
 		{"c", "~/.config/nvim/lua/core/configs.lua"},
@@ -35,7 +35,7 @@ return {
 	"tkachenkosi/malpha.nvim",
 	config = function()
 			require("malpha").setup({
-				count_recent = 20,
+				count_recent = 15,
 			})
 			require("malpha").enable_autostart()
 	end,
