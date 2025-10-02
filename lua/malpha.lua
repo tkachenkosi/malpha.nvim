@@ -18,9 +18,12 @@ local M = {}
 
 -- Значения по умолчанию
 local config = {
-	title = "Start screen nvim by © Tkachenkosi. 2025",
+	title = "Start screen nvim",
+	footer = "© Tkachenkosi. 2025",
 	count_recent = 20,
 	session_name = "/.session",
+	color_title = "#3b77b3",
+	color_footer = "#2f5e8c",
 	pinned = {
 		{"c", "~/.config/nvim/lua/core/configs.lua"},
 		{"m", "~/.config/nvim/lua/core/mappings.lua"},
@@ -107,7 +110,7 @@ function M.open()
     table.insert(lines, string.format("[%s] %s", pin[1], pin[2]))
   end
   table.insert(lines, "")
-  table.insert(lines, "<End start screen>")
+  table.insert(lines, config.footer)
 
 	-- Добавляем строки ---
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
@@ -126,7 +129,7 @@ function M.open()
 		default = true,
 	})
 
-	vim.api.nvim_set_hl(0, "MyHighlightEndLine", {
+	vim.api.nvim_set_hl(0, "MyHighlightFooter", {
 		fg = "#2f5e8c",
 		ctermfg = 180,
 		default = true,
@@ -166,7 +169,8 @@ function M.open()
 		buf,ns,0,0,
 		{
 			end_row = 0,
-			end_col = #lines[1],
+			-- end_col = #lines[1],
+			end_col = #config.title,
 			hl_group = "MyHighlightTitle",
 			hl_eol = false,
 		}
@@ -178,8 +182,8 @@ function M.open()
 		buf,ns,last_line,0,
 		{
 			end_row = last_line,
-			end_col = 18,
-			hl_group = "MyHighlightEndLine",
+			end_col = #config.footer,
+			hl_group = "MyHighlightFooter",
 			hl_eol = false,
 		}
 	)
@@ -198,8 +202,8 @@ function M.open()
   -- end
 
   -- pinned
-  for _, file in ipairs(config.pinned) do
-    vim.keymap.set("n", file[1], function() vim.cmd("edit " .. file[2]) end, opts)
+  for _, pin in ipairs(config.pinned) do
+    vim.keymap.set("n", pin[1], function() vim.cmd("edit " .. pin[2]) end, opts)
   end
 
 	vim.keymap.set("n", "q", "<cmd>qa<CR>", opts)
@@ -207,15 +211,17 @@ function M.open()
 end
 
 function M.setup(options)
-	options = options or {}
-	config.title = options.title or config.title
-	config.count_recent = options.count_recent or config.count_recent
-	config.session_name = options.session_name or config.session_name
+	-- options = options or {}
+	-- config.title = options.title or config.title
+	-- config.count_recent = options.count_recent or config.count_recent
+	-- config.session_name = options.session_name or config.session_name
+
+	config = vim.tbl_deep_extend("force", config, options or {})
 
 	-- обновляем pinned файлы, если они предоставлены
-	if options.pinned then
-		config.pinned = options.pinned
-	end
+	-- if options.pinned then
+		-- config.pinned = options.pinned
+	-- end
 
 	-- валидаця
 	if config.count_recent < 10 then

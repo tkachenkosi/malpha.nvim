@@ -42,7 +42,10 @@ Example:
 #### Installation and Usage:
 ```
 DEFAULT_OPTIONS:
-title = "Start screen nvim by © Tkachenkosi. 2025"
+title = "Start screen nvim"
+footer = "© Tkachenkosi. 2025"
+color_title = "#3b77b3"
+color_footer = "#2f5e8c"
 count_recent = 20,           -- Показывать только 20 последних файлов
 session_name = "/.mysession", -- Использовать другое имя файла сессии
 	pinned = {
