@@ -106,7 +106,8 @@ function M.open()
   for _, pin in ipairs(config.pinned) do
     table.insert(lines, string.format("[%s] %s", pin[1], pin[2]))
   end
-  table.insert(lines, "<End start page>")
+  table.insert(lines, "")
+  table.insert(lines, "<End start screen>")
 
 	-- Добавляем строки ---
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
@@ -119,7 +120,7 @@ function M.open()
 	})
 
 	vim.api.nvim_set_hl(0, "MyHighlightTitle", {
-		fg = "#2f5e8c",
+		fg = "#3b77b3",
 		ctermfg = 180,
 		bold = true,
 		default = true,
@@ -177,7 +178,7 @@ function M.open()
 		buf,ns,last_line,0,
 		{
 			end_row = last_line,
-			end_col = 15,
+			end_col = 18,
 			hl_group = "MyHighlightEndLine",
 			hl_eol = false,
 		}
