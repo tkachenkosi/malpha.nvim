@@ -119,8 +119,15 @@ function M.open()
 	})
 
 	vim.api.nvim_set_hl(0, "MyHighlightTitle", {
+		fg = "#224466",
 		ctermfg = 180,
 		bold = true,
+		default = true,
+	})
+
+	vim.api.nvim_set_hl(0, "MyHighlightEndLine", {
+		fg = "#224466",
+		ctermfg = 180,
 		default = true,
 	})
 
@@ -137,7 +144,6 @@ function M.open()
 		if last_slash_pos then
 
 			-- Выделяем путь ДО имени файла (от начала до последнего слэша)
-			-- Добавляем экстмарк с хайлайтом
 			vim.api.nvim_buf_set_extmark(
 				buf,           -- номер буфера
 				ns,				     -- namespace
@@ -161,6 +167,18 @@ function M.open()
 			end_row = 0,
 			end_col = #lines[1],
 			hl_group = "MyHighlightTitle",
+			hl_eol = false,
+		}
+	)
+
+	-- выделяем последнею строку
+	local last_line = vim.api.nvim_buf_line_count(buf) - 1
+	vim.api.nvim_buf_set_extmark(
+		buf,ns,last_line,0,
+		{
+			end_row = last_line,
+			end_col = #lines[last_line],
+			hl_group = "MyHighlightEndLine",
 			hl_eol = false,
 		}
 	)
