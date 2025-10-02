@@ -20,10 +20,10 @@ local M = {}
 local config = {
 	title = "Start screen nvim",
 	footer = "© Tkachenkosi. 2025",
-	count_recent = 20,
-	session_name = "/.session",
 	color_title = "#3b77b3",
 	color_footer = "#2f5e8c",
+	count_recent = 20,
+	session_name = "/.session",
 	pinned = {
 		{"c", "~/.config/nvim/lua/core/configs.lua"},
 		{"m", "~/.config/nvim/lua/core/mappings.lua"},
@@ -123,14 +123,14 @@ function M.open()
 	})
 
 	vim.api.nvim_set_hl(0, "MyHighlightTitle", {
-		fg = "#3b77b3",
+		fg = config.color_title,
 		ctermfg = 180,
 		bold = true,
 		default = true,
 	})
 
 	vim.api.nvim_set_hl(0, "MyHighlightFooter", {
-		fg = "#2f5e8c",
+		fg = config.color_footer,
 		ctermfg = 180,
 		default = true,
 	})
