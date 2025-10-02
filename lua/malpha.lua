@@ -119,14 +119,14 @@ function M.open()
 	})
 
 	vim.api.nvim_set_hl(0, "MyHighlightTitle", {
-		fg = "#224466",
+		fg = "#2f5e8c",
 		ctermfg = 180,
 		bold = true,
 		default = true,
 	})
 
 	vim.api.nvim_set_hl(0, "MyHighlightEndLine", {
-		fg = "#224466",
+		fg = "#2f5e8c",
 		ctermfg = 180,
 		default = true,
 	})
@@ -177,7 +177,7 @@ function M.open()
 		buf,ns,last_line,0,
 		{
 			end_row = last_line,
-			end_col = #lines[last_line],
+			end_col = 15,
 			hl_group = "MyHighlightEndLine",
 			hl_eol = false,
 		}
