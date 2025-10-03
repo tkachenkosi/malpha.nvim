@@ -50,11 +50,11 @@ local function load_path()
 	if f == ":" then
 		local session =	vim.fn.expand(string.sub(line, 3))
     if file_exists(session..config.session_name) then
-			local old_viminfo = vim.o.viminfo -- Сохраняем настройки
-			vim.o.viminfo = ""	-- ВРЕМЕННО отключаем запись в историю
+			-- local old_viminfo = vim.o.viminfo -- Сохраняем настройки
+			-- vim.o.viminfo = ""	-- ВРЕМЕННО отключаем запись в историю
 			vim.cmd("cd "..session)
 			vim.cmd("source "..string.sub(config.session_name, 2))
-			vim.o.viminfo = old_viminfo
+			-- vim.o.viminfo = old_viminfo
 		end
 	elseif f == "~" or f == "/" then
 		local file = vim.fn.expand(line)
@@ -216,8 +216,6 @@ end
 function M.setup(options)
 	-- options = options or {}
 	-- config.title = options.title or config.title
-	-- config.count_recent = options.count_recent or config.count_recent
-	-- config.session_name = options.session_name or config.session_name
 
 	config = vim.tbl_deep_extend("force", config, options or {})
 
