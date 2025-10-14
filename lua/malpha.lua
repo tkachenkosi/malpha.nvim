@@ -61,6 +61,13 @@ local function load_path()
     if file_exists(file) then
 			vim.cmd("edit "..file)
 		end
+	elseif f == "[" then
+		local file = vim.fn.expand(string.sub(line, 5))
+    if file_exists(file) then
+			vim.cmd("edit "..file)
+		else
+			vim.cmd("enew")	-- новый файл
+		end
 	end
 end
 
