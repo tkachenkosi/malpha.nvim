@@ -16,9 +16,11 @@ local M = {}
 --     default = false,       -- наследовать атрибуты
 -- })
 
+local v = vim.version()
+
 -- Значения по умолчанию
 local config = {
-	title = "Start screen nvim",
+	title = "Start screen nvim "..v.major.."."..v.minor.."."..v.patch,
 	footer = "© Tkachenkosi. 2025",
 	color_title = "#3b77b3",
 	color_footer = "#2f5e8c",
