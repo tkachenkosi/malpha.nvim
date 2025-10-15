@@ -72,7 +72,7 @@ local function load_path()
 end
 
 -- Функция запуска стартового экрана
-function M.open()
+function M.start()
   -- Создаём новый буфер
   vim.cmd("enew")
   local buf = vim.api.nvim_get_current_buf()
@@ -248,9 +248,10 @@ function M.enable_autostart()
 			-- - Нет аргументов командной строки
 			-- - Не восстанавливается сессия
 			if vim.fn.argc() == 0 and vim.v.this_session == "" then
-					M.open()
+					M.start()
 			end
-		end
+		end,
+		once = true, -- старт-скрин только один раз
 	})
 end
 
