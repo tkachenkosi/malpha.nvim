@@ -1,34 +1,179 @@
-Installation and Usage:
+*malpha.txt*            Minimal and customizable start screen for Neovim
+==============================================================================
+CONTENTS                                                *malpha-contents*
 
+1. Overview ........................ |malpha-overview|
+2. Installation .................... |malpha-installation|
+3. Usage .......................... |malpha-usage|
+4. Configuration .................. |malpha-configuration|
+5. Keymaps ........................ |malpha-keymaps|
+6. API ............................ |malpha-api|
+7. Author ......................... |malpha-author|
 
-DEFAULT_OPTIONS:
-title = "Start screen nvim"
-footer = "© Tkachenkosi. 2025"
-color_title = "#3b77b3"
-color_footer = "#2f5e8c"
-count_recent = 20,           -- Показывать только 20 последних файлов
-session_name = "/.mysession", -- Использовать другое имя файла сессии
-	pinned = {
-		{"c", "~/.config/nvim/lua/core/configs.lua"},
-		{"m", "~/.config/nvim/lua/core/mappings.lua"},
-		{"l", "~/.config/nvim/lua/core/lsp.lua"},
-		{"s", "~/.config/nvim/.session"},
+==============================================================================
+OVERVIEW                                              *malpha-overview*
 
+Malpha.nvim is a minimal, fast, and customizable start screen for Neovim.
+It provides a clean interface showing recent files, pinned files, and sessions
+with beautiful highlighting and intuitive navigation.
 
-Setting up for Lazy:
-In the plugins/malpha.lua file, we add the commands:
+Features:
+- 📁 Recent files list
+- 📌 Pinned files for quick access
+- 💾 Session management
+- 🎨 Customizable colors and layout
+- ⚡ Fast and lightweight
 
-return {
-	"tkachenkosi/malpha.nvim",
-	config = function()
-			require("malpha").setup({
-        title = "Start screen",
-				count_recent = 15,
-			})
-			require("malpha").enable_autostart()
-	end,
-	event = "VimEnter",
-}
+==============================================================================
+INSTALLATION                                        *malpha-installation*
 
-q      - close start screen and quit nvim
-CR     - open the selected buffer
+With lazy.nvim:
+>
+  return {
+    "tkachenkosi/malpha.nvim",
+    event = "VimEnter",
+    config = function()
+      require("malpha").setup({
+        title = "My Start Screen",
+        count_recent = 15,
+      })
+      require("malpha").enable_autostart()
+    end,
+  }
+<
+
+With packer.nvim:
+>
+  use {
+    "tkachenkosi/malpha.nvim",
+    config = function()
+      require("malpha").setup({
+        title = "My Start Screen",
+        count_recent = 15,
+      })
+      require("malpha").enable_autostart()
+    end,
+  }
+<
+
+==============================================================================
+USAGE                                                    *malpha-usage*
+
+Malpha automatically opens when you start Neovim without file arguments.
+
+To open Malpha manually:
+>
+  :MalphaShow<CR>
+<
+
+To close Malpha:
+>
+  :MalphaHide<CR>
+<
+
+To toggle Malpha:
+>
+  :MalphaToggle<CR>
+<
+
+==============================================================================
+CONFIGURATION                                        *malpha-configuration*
+
+Default configuration:
+>
+  require("malpha").setup({
+    -- Window appearance
+    title = "Start screen nvim",
+    footer = "© Tkachenkosi. 2025",
+    color_title = "#3b77b3",
+    color_footer = "#2f5e8c",
+    
+    -- File management
+    count_recent = 20,           -- Show only 20 recent files
+    session_name = ".mysession", -- Custom session file name
+    
+    -- Pinned files (quick access)
+    pinned = {
+      {"c", "~/.config/nvim/lua/core/configs.lua"},
+      {"m", "~/.config/nvim/lua/core/mappings.lua"},
+      {"l", "~/.config/nvim/lua/core/lsp.lua"},
+      {"s", "~/.config/nvim/.session"},
+    },
+    
+    -- Additional options
+    debug = false,               -- Enable debug mode
+    auto_session = true,         -- Auto save/load sessions
+  })
+<
+
+Custom configuration example:
+>
+  require("malpha").setup({
+    title = "My Neovim",
+    footer = "Welcome back!",
+    color_title = "#ff6b6b",
+    color_footer = "#51cf66",
+    count_recent = 10,
+    pinned = {
+      {"n", "~/.config/nvim/init.lua"},
+      {"z", "~/.zshrc"},
+      {"p", "~/projects/"},
+    },
+  })
+<
+
+==============================================================================
+KEYMAPS                                                  *malpha-keymaps*
+
+Navigation in Malpha window:
+
+  <CR> or <Enter>  - Open selected buffer/file
+  q                - Close start screen and quit Neovim
+  j / k            - Navigate down/up through the list
+  gg               - Jump to top of the list
+  G                - Jump to bottom of the list
+  /                - Search through files
+  n                - Next search result
+  N                - Previous search result
+
+Pinned files access:
+  Press the corresponding key for pinned files (e.g., 'c', 'm', 'l', 's')
+
+==============================================================================
+API                                                          *malpha-api*
+
+Malpha provides the following API functions:
+
+>
+  require("malpha").setup(opts)     -- Initialize with configuration
+  require("malpha").show()          -- Show the start screen
+  require("malpha").hide()          -- Hide the start screen
+  require("malpha").toggle()        -- Toggle visibility
+  require("malpha").enable_autostart()  -- Enable auto-show on VimEnter
+  require("malpha").disable_autostart() -- Disable auto-show on VimEnter
+<
+
+Example usage in keymaps:
+>
+  vim.keymap.set('n', '<leader>h', require('malpha').toggle, { desc = 'Toggle start screen' })
+<
+
+==============================================================================
+AUTHOR                                                  *malpha-author*
+
+Author: Sergey Tkachenko  
+License: MIT  
+GitHub: https://github.com/tkachenkosi/malpha.nvim
+
+Report bugs and feature requests on GitHub.
+
+==============================================================================
+CHANGELOG                                            *malpha-changelog*
+
+v1.0.0 - Initial release
+- Basic start screen with recent files
+- Pinned files functionality
+- Session management
+- Customizable appearance
+
+ vim:tw=78:ts=8:ft=help:norl:

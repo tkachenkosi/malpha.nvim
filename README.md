@@ -1,20 +1,22 @@
-### A minimalistic start page for the Neovim editor.
+```markdown
+# Malpha.nvim
 
-The starting page for the nvim editor contains lists of three types.
+### A minimalistic start page for the Neovim editor
 
-The first type is previously opened files.
+A clean and customizable start screen that displays your recent files, sessions, and pinned files for quick access to your development environment.
 
-The second list is sessions. These are project directories that contain a saved nvim session file.
-The session list is stored in a text file in the ~/.config/nvim/ directory, for example, the .session file, and is filled in manually.
-Example contents of the session list file:
-```
-~/js/svelte/books
-~/js/svelte/demo
-```
+## Features
 
-The third list is configurable links to necessary files.
+- **Recent Files** - Automatically tracks and displays recently opened files
+- **Session Management** - Quick access to your project sessions  
+- **Pinned Files** - Custom shortcuts to frequently used files and configurations
+- **Clean Interface** - Minimal design with customizable colors and layout
+- **Lightweight** - Fast loading with no heavy dependencies
 
-Example:
+## Layout
+
+The start screen organizes your workspace into three intuitive sections:
+
 ```
 © Start screen
 
@@ -35,42 +37,108 @@ Example:
 [m] ~/.config/nvim/lua/core/mappings.lua
 [l] ~/.config/nvim/lua/core/lsp.lua
 [s] ~/.config/nvim/.session
-<End start page>
 ```
 
----
-#### Installation and Usage:
+### Section Details
+
+**Recent Files** - Automatically populated from your editing history (first file list)
+
+**Sessions** - Project directories containing saved nvim session files (lines starting with `:`)
+- Sessions are stored in `~/.config/nvim/.mysession` (configurable)
+- Manually edit this file to add your project paths:
 ```
-DEFAULT_OPTIONS:
-title = "Start screen nvim"
-footer = "© Tkachenkosi. 2025"
-color_title = "#3b77b3"
-color_footer = "#2f5e8c"
-count_recent = 20,           -- Показывать только 20 последних файлов
-session_name = "/.mysession", -- Использовать другое имя файла сессии
-	pinned = {
-		{"c", "~/.config/nvim/lua/core/configs.lua"},
-		{"m", "~/.config/nvim/lua/core/mappings.lua"},
-		{"l", "~/.config/nvim/lua/core/lsp.lua"},
-		{"s", "~/.config/nvim/.session"},
+~/js/svelte/books
+~/js/svelte/demo
+```
 
+**Pinned Files** - Custom shortcuts to your most important files (last list with key bindings)
 
+## Installation
+```
 
-Setting up for Lazy:
-In the plugins/malpha.lua file, we add the commands:
+### Lazy.nvim
 
+```lua
 return {
-	"tkachenkosi/malpha.nvim",
-	config = function()
-			require("malpha").setup({
-                title = "Start screen",
-				count_recent = 15,
-			})
-			require("malpha").enable_autostart()
-	end,
-	event = "VimEnter",
+  "tkachenkosi/malpha.nvim",
+  event = "VimEnter",
+  config = function()
+    require("malpha").setup({
+      title = "Start screen",
+      count_recent = 15,
+    })
+    require("malpha").enable_autostart()
+  end,
 }
 ```
-#### Keys in the buffer start screen:
-q      - close start screen and quit nvim
-CR     - open the selected buffer
+
+### Packer.nvim
+
+```lua
+use {
+  "tkachenkosi/malpha.nvim",
+  config = function()
+    require("malpha").setup({
+      title = "Start screen",
+      count_recent = 15,
+    })
+    require("malpha").enable_autostart()
+  end,
+}
+```
+
+## Configuration
+
+```lua
+require("malpha").setup({
+  -- Window appearance
+  title = "Start screen nvim",
+  footer = "© Tkachenkosi. 2025",
+  color_title = "#3b77b3",
+  color_footer = "#2f5e8c",
+  
+  -- File management
+  count_recent = 20,           -- Show only 20 recent files
+  session_name = ".mysession", -- Session file name
+  
+  -- Pinned files (quick access)
+  pinned = {
+    {"c", "~/.config/nvim/lua/core/configs.lua"},
+    {"m", "~/.config/nvim/lua/core/mappings.lua"},
+    {"l", "~/.config/nvim/lua/core/lsp.lua"},
+    {"s", "~/.config/nvim/.session"},
+  },
+})
+```
+
+### Custom Configuration Example
+
+```lua
+require("malpha").setup({
+  title = "My Workspace",
+  footer = "Ready to code!",
+  color_title = "#ff6b6b",
+  color_footer = "#51cf66",
+  count_recent = 10,
+  session_name = ".projects",
+  pinned = {
+    {"n", "~/.config/nvim/init.lua"},
+    {"z", "~/.zshrc"},
+    {"p", "~/projects/"},
+  },
+})
+```
+
+## Key Bindings
+
+When the start screen is active:
+
+- `q` - Close start screen and quit Neovim
+- `Enter` - Open the selected buffer/file
+- `j`/`k` - Navigate up and down the list
+- `c`, `m`, `l`, `s` - Quick jump to pinned files
+
+## License
+
+MIT © Tkachenkosi 2025
+```
