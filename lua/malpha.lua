@@ -25,6 +25,7 @@ local config = {
 	color_title = "#3b77b3",
 	color_footer = "#2f5e8c",
 	count_recent = 20,
+	add_filter = false,		-- доп. фильтрация последних открытых файлов не из сессий
 	session_name = "/.session",
 	pinned = {
 		{"c", "~/.config/nvim/lua/core/configs.lua"},
@@ -102,10 +103,12 @@ function M.start()
 
 	-- Функция для проверки, принадлежит ли файл какому-либо проекту из sessions
 	local function is_file_in_sessions(file_path)
-		for _, dir in ipairs(dir_sessions) do
-			-- Проверяем, содержится ли короткий путь файла в путях сессий
-			if string.find(file_path, dir, 1, true) then
-				return true
+		if config.add_filter then
+			for _, dir in ipairs(dir_sessions) do
+				-- Проверяем, содержится ли короткий путь файла в путях сессий
+				if string.find(file_path, dir, 1, true) then
+					return true
+				end
 			end
 		end
 		return false
