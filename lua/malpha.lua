@@ -102,6 +102,7 @@ function M.start()
   local oldfiles = vim.v.oldfiles or {}
   for i = 1, math.min(config.count_recent, #oldfiles) do
     table.insert(lines, string.format("%s", shorten_path(oldfiles[i])))
+    table.insert(lines, vim.fn.fnamemodify(oldfiles[i], ':h'))
   end
   table.insert(lines, "")
 
