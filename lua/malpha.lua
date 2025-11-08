@@ -88,6 +88,30 @@ function M.start()
   vim.bo[buf].buflisted = false
   vim.bo[buf].textwidth = 0
 
+	-- Заполняем массив сессий
+	local dir_sessions = {}
+	local file = io.open(vim.fn.expand("~/.config/nvim"..config.session_name), "r")
+	if file then
+		for line in file:lines() do
+			table.insert(dir_sessions, line)
+		end
+		file:close()
+	else
+		table.insert(dir_sessions, "Ошибка: открытия файла для чтения "..config.session_name)
+	end
+
+	-- Функция для проверки, принадлежит ли файл какому-либо проекту из sessions
+	local function is_file_in_sessions(file_path)
+		for _, dir in ipairs(dir_sessions) do
+			-- Проверяем, содержится ли короткий путь файла в путях сессий
+			if string.find(file_path, dir, 1, true) then
+				return true
+			end
+		end
+		return false
+	end
+
+
   local lines = {}
 
   --  Заголовок
@@ -98,27 +122,29 @@ function M.start()
   table.insert(lines, "[n] New file")
   table.insert(lines, "")
 
-  -- Последние файлы
+  -- 1. Последние открытые файлы кроме сессий
+	local added_count = 0
   local oldfiles = vim.v.oldfiles or {}
-  for i = 1, math.min(config.count_recent, #oldfiles) do
-    table.insert(lines, string.format("%s", shorten_path(oldfiles[i])))
-    table.insert(lines, vim.fn.fnamemodify(oldfiles[i], ':h'))
+  for i = 1, #oldfiles do
+		if added_count >= config.count_recent then
+      break
+    end
+
+		local sf = shorten_path(oldfiles[i])
+		if not is_file_in_sessions(sf) then
+			table.insert(lines, sf)
+			added_count = added_count + 1
+		end
   end
   table.insert(lines, "")
 
-	-- Открываем файл сессий для чтения
-	local file = io.open(vim.fn.expand("~/.config/nvim"..config.session_name), "r")
-	if file then
-			for line in file:lines() do
-					table.insert(lines, string.format(": %s", line))
-			end
-			file:close()
-	else
-			table.insert(lines, "Ошибка: открытия файла для чтения "..config.session_name)
-	end
+	-- 2. Добавление сессий в lines
+  for _, dir in ipairs(dir_sessions) do
+    table.insert(lines, string.format(": %s", dir))
+  end
   table.insert(lines, "")
 
-  -- Закреплённые
+  -- 3. Закреплённые
   for _, pin in ipairs(config.pinned) do
     table.insert(lines, string.format("[%s] %s", pin[1], pin[2]))
   end
