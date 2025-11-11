@@ -36,7 +36,7 @@ local config = {
 }
 
 -- Утилита 1: Сократить путь (заменить $HOME)
-local function shorten_path(path)
+local function file_shorten_path(path)
   local home = vim.fn.expand("~")
   return path:gsub("^" .. vim.pesc(home), "~")
 end
@@ -104,6 +104,10 @@ function M.start()
 	-- Функция для проверки, принадлежит ли файл какому-либо проекту из sessions
 	local function is_file_in_sessions(file_path)
 		if config.add_filter then
+			-- это служебное окно
+			if string.find(file_path, 'NetrwTree', 1, true) then
+				return true
+			end
 			for _, dir in ipairs(dir_sessions) do
 				-- Проверяем, содержится ли короткий путь файла в путях сессий
 				if string.find(file_path, dir, 1, true) then
@@ -133,7 +137,7 @@ function M.start()
       break
     end
 
-		local sf = shorten_path(oldfiles[i])
+		local sf = file_shorten_path(oldfiles[i])
 		if not is_file_in_sessions(sf) then
 			table.insert(lines, sf)
 			added_count = added_count + 1
