@@ -120,6 +120,7 @@ require("malpha").setup({
   color_title = "#ff6b6b",
   color_footer = "#51cf66",
   count_recent = 10,
+  add_filter = true,
   session_name = ".projects",
   pinned = {
     {"n", "~/.config/nvim/init.lua"},
