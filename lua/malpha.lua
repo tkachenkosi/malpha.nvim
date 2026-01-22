@@ -108,6 +108,10 @@ function M.start()
 			if string.find(file_path, 'NetrwTree', 1, true) then
 				return true
 			end
+			-- это запускалось для gopass
+			if string.find(file_path, 'gopass-edit', 1, true) then
+				return true
+			end
 			for _, dir in ipairs(dir_sessions) do
 				-- Проверяем, содержится ли короткий путь файла в путях сессий
 				if string.find(file_path, dir, 1, true) then
