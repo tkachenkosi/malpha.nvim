@@ -28,6 +28,7 @@ local config = {
 	add_filter = false,		-- доп. фильтрация последних открытых файлов не из сессий
 	session_name = "/.session",
 	pinned = {
+		{"i", "~/.config/nvim/init.lua"},
 		{"c", "~/.config/nvim/lua/core/configs.lua"},
 		{"m", "~/.config/nvim/lua/core/mappings.lua"},
 		{"l", "~/.config/nvim/lua/core/lsp.lua"},
