@@ -31,7 +31,7 @@ local config = {
 		{"i", "~/.config/nvim/init.lua"},
 		{"c", "~/.config/nvim/lua/core/configs.lua"},
 		{"m", "~/.config/nvim/lua/core/mappings.lua"},
-		{"l", "~/.config/nvim/lua/core/lsp.lua"},
+		-- {"l", "~/.config/nvim/lua/core/lsp.lua"},
 		{"s", "~/.config/nvim/.session"},
 	}
 }
