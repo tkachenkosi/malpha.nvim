@@ -47,28 +47,34 @@ local function file_exists(file_path)
 	return vim.fn.filereadable(file_path) == 1
 end
 
+local function edit(path)
+	-- vim.cmd("edit "..path)
+  vim.api.nvim_cmd({ cmd = "edit", args = { path } }, {})
+end
+
 -- Загрузить файл
 local function load_path()
 	local line = vim.api.nvim_get_current_line()
 	local f =	string.sub(line, 1, 1)
 	if f == ":" then
-		local session =	vim.fn.expand(string.sub(line, 3))
-    if file_exists(session..config.session_name) then
+		local dir =	vim.fn.expand(string.sub(line, 3))
+    if file_exists(dir..config.session_name) then
 			-- local old_viminfo = vim.o.viminfo -- Сохраняем настройки
 			-- vim.o.viminfo = ""	-- ВРЕМЕННО отключаем запись в историю
-			vim.cmd("cd "..session)
+			-- vim.cmd("cd "..session)
+      vim.api.nvim_set_current_dir(dir)
 			vim.cmd("source "..string.sub(config.session_name, 2))
 			-- vim.o.viminfo = old_viminfo
 		end
 	elseif f == "~" or f == "/" then
 		local file = vim.fn.expand(line)
     if file_exists(file) then
-			vim.cmd("edit "..file)
+			edit(file)
 		end
 	elseif f == "[" then
 		local file = vim.fn.expand(string.sub(line, 5))
     if file_exists(file) then
-			vim.cmd("edit "..file)
+			edit(file)
 		else
 			vim.cmd("enew")	-- новый файл
 		end
@@ -254,10 +260,11 @@ function M.start()
 
   -- pinned
   for _, pin in ipairs(config.pinned) do
-    vim.keymap.set("n", pin[1], function() vim.cmd("edit " .. pin[2]) end, opts)
+    vim.keymap.set("n", pin[1], function() edit(pin[2]) end, opts)
   end
 
-	vim.keymap.set("n", "q", "<cmd>qa<CR>", opts)
+	-- vim.keymap.set("n", "q", "<cmd>qa<CR>", opts)
+  vim.keymap.set("n", "q", vim.cmd.qa, opts)
 	vim.keymap.set("n", "<CR>", function() load_path() end, opts)
 end
 
