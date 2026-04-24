@@ -63,8 +63,8 @@ local function load_path()
 			-- vim.o.viminfo = ""	-- ВРЕМЕННО отключаем запись в историю
 			-- vim.cmd("cd "..session)
       vim.api.nvim_set_current_dir(dir)
-			-- vim.cmd("source "..string.sub(config.session_name, 2))
-			vim.cmd("source "..config.session_name)
+			vim.cmd("source "..string.sub(config.session_name, 2))
+			-- vim.cmd("source "..config.session_name)
 			-- vim.o.viminfo = old_viminfo
 		end
 	elseif f == "~" or f == "/" then
