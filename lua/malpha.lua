@@ -63,7 +63,8 @@ local function load_path()
 			-- vim.o.viminfo = ""	-- ВРЕМЕННО отключаем запись в историю
 			-- vim.cmd("cd "..session)
       vim.api.nvim_set_current_dir(dir)
-			vim.cmd("source "..string.sub(config.session_name, 2))
+			-- vim.cmd("source "..string.sub(config.session_name, 2))
+			vim.cmd("source "..config.session_name)
 			-- vim.o.viminfo = old_viminfo
 		end
 	elseif f == "~" or f == "/" then
@@ -173,27 +174,27 @@ function M.start()
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
 	-- устанавливаем hl
-	vim.api.nvim_set_hl(0, "MyHighlightPath", {
+	vim.api.nvim_set_hl(0, "HlDashPath", {
 		fg = "#ada085",      -- GUI цвет
 		ctermfg = 180,       -- Терминальный цвет
 		default = true,   -- наследовать отсутствующие атрибуты
 	})
 
-	vim.api.nvim_set_hl(0, "MyHighlightTitle", {
+	vim.api.nvim_set_hl(0, "HlDashTitle", {
 		fg = config.color_title,
 		ctermfg = 180,
 		bold = true,
 		default = true,
 	})
 
-	vim.api.nvim_set_hl(0, "MyHighlightFooter", {
+	vim.api.nvim_set_hl(0, "HlDashFooter", {
 		fg = config.color_footer,
 		ctermfg = 180,
 		default = true,
 	})
 
 	-- Создаем namespace для хайлайтов
-  local ns = vim.api.nvim_create_namespace("file_paths_highlights")
+  local ns = vim.api.nvim_create_namespace("start_dashboard")
 	-- Очищаем старые хайлайты в этом namespace
   -- vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
 
@@ -213,43 +214,36 @@ function M.start()
 				{
 					end_row = i - 1,       -- конечная строка
 					end_col = last_slash_pos, -- конечная колонка
-					hl_group = "MyHighlightPath", -- группа хайлайта
+					hl_group = "HlDashPath", -- группа хайлайта
 					hl_eol = false,        -- не подсвечивать до конца строки
-				}
-			)
+				})
 
 		end
 	end
 
 	-- выделяем первую строку
-	vim.api.nvim_buf_set_extmark(
-		buf,ns,0,0,
-		{
+	vim.api.nvim_buf_set_extmark(buf, ns, 0, 0, {
 			end_row = 0,
-			-- end_col = #lines[1],
 			end_col = #config.title,
-			hl_group = "MyHighlightTitle",
+			hl_group = "HlDashTitle",
 			hl_eol = false,
-		}
-	)
+		})
 
 	-- выделяем последнею строку
 	local last_line = vim.api.nvim_buf_line_count(buf) - 1
-	vim.api.nvim_buf_set_extmark(
-		buf,ns,last_line,0,
-		{
+	vim.api.nvim_buf_set_extmark(buf, ns, last_line, 0, {
 			end_row = last_line,
 			end_col = #config.footer,
-			hl_group = "MyHighlightFooter",
+			hl_group = "HlDashFooter",
 			hl_eol = false,
-		}
-	)
+		})
 
   vim.bo[buf].modifiable = false
 
   -- Привязка клавиш
   local opts = { noremap = true, silent = true, buffer = buf }
-  vim.keymap.set("n", "n", ":enew<CR>", opts)
+  vim.keymap.set("n", "n", vim.cmd.enew, opts)
+  -- vim.keymap.set("n", "n", ":enew<CR>", opts)
 
   -- recent files
   -- for i = 1, math.min(10, #oldfiles) do
