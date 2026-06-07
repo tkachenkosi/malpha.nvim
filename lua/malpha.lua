@@ -61,10 +61,8 @@ local function load_path()
     if file_exists(dir..config.session_name) then
 			-- local old_viminfo = vim.o.viminfo -- Сохраняем настройки
 			-- vim.o.viminfo = ""	-- ВРЕМЕННО отключаем запись в историю
-			-- vim.cmd("cd "..session)
       vim.api.nvim_set_current_dir(dir)
 			vim.cmd("source "..string.sub(config.session_name, 2))
-			-- vim.cmd("source "..config.session_name)
 			-- vim.o.viminfo = old_viminfo
 		end
 	elseif f == "~" or f == "/" then
@@ -243,7 +241,6 @@ function M.start()
   -- Привязка клавиш
   local opts = { noremap = true, silent = true, buffer = buf }
   vim.keymap.set("n", "n", vim.cmd.enew, opts)
-  -- vim.keymap.set("n", "n", ":enew<CR>", opts)
 
   -- recent files
   -- for i = 1, math.min(10, #oldfiles) do
