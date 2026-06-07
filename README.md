@@ -32,9 +32,9 @@ It is divided into **three logical sections**:
 
 ### Layout Example
 
+```
 © Start screen
 
-```
 [n] New file
 
 "~/js/svelte/money/index.html"
@@ -85,8 +85,7 @@ require("malpha").setup({
 require("malpha").enable_autostart()
 ```
 ```
-Configuration
-Option	Default	Description
+Configuration Option	Default	Description:
 title	"Start screen"	Header text
 footer	""	Footer text
 color_title	"#3b77b3"	Color of the title
@@ -105,9 +104,7 @@ pinned = {
   {"s", "~/.config/nvim/.session"},
 }
 ```
-
 Full custom configuration
-
 ```lua
 require("malpha").setup({
   title = "My Workspace",
