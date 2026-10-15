@@ -36,6 +36,28 @@ local config = {
 	}
 }
 
+--- Проверяет, является ли путь существующим файлом (а не директорией).
+--- @param path string Путь для проверки
+--- @return boolean true  — если это существующий файл
+--- @return boolean false — если это директория (или путь не файл)
+local function ifFileExist(path)
+  if type(path) ~= "string" or path == "" then
+    return false
+  end
+
+  -- Разворачиваем ~ и переменные окружения, приводим к абсолютному виду
+  local abs = vim.fn.fnamemodify(vim.fn.expand(path), ":p")
+
+  -- Проверяем именно файл (не директорию) и его существование
+  if vim.fn.filereadable(abs) == 1 and vim.fn.isdirectory(abs) == 0 then
+    return true
+  end
+
+  -- Всё остальное (директория, несуществующий путь, спецфайл) — false
+  return false
+end
+
+
 -- Утилита 1: Сократить путь (заменить $HOME)
 local function file_shorten_path(path)
   local home = vim.fn.expand("~")
@@ -148,7 +170,7 @@ function M.start()
     end
 
 		local sf = file_shorten_path(oldfiles[i])
-		if not is_file_in_sessions(sf) then
+		if not is_file_in_sessions(sf) and ifFileExist(oldfiles[i]) then
 			table.insert(lines, sf)
 			added_count = added_count + 1
 		end
