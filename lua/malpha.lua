@@ -177,15 +177,16 @@ function M.start()
 	-- 	end
 	--  end
 
-	-- второй вариант
-	for i, f in ipairs(vim.v.oldfiles or {}) do
-		if i >= config.count_recent then
+	local added_count = 0
+	for _, f in ipairs(vim.v.oldfiles or {}) do
+		if added_count >= config.count_recent then
       break
     end
 
 		local sf = file_shorten_path(f)
 		if not is_file_in_sessions(sf) and ifFileExist(f) then
 			table.insert(lines, sf)
+	 		added_count = added_count + 1
 		end
 	end
   table.insert(lines, "")
