@@ -29,8 +29,8 @@ local config = {
 	session_name = "/.session",
 	pinned = {
 		{"i", "~/.config/nvim/init.lua"},
-		{"c", "~/.config/nvim/lua/core/configs.lua"},
-		{"m", "~/.config/nvim/lua/core/mappings.lua"},
+		{"c", "~/.config/nvim/lua/core/options.lua"},
+		{"m", "~/.config/nvim/lua/core/keymaps.lua"},
 		-- {"l", "~/.config/nvim/lua/core/lsp.lua"},
 		{"s", "~/.config/nvim/.session"},
 	}
@@ -39,7 +39,7 @@ local config = {
 --- Проверяет, является ли путь существующим файлом (а не директорией).
 --- @param path string Путь для проверки
 --- @return boolean true  — если это существующий файл
---- @return boolean false — если это директория (или путь не файл)
+--- boolean false — если это директория (или путь не файл)
 local function ifFileExist(path)
   if type(path) ~= "string" or path == "" then
     return false
