@@ -17,6 +17,7 @@ local M = {}
 -- })
 
 local v = vim.version()
+local stdpath = vim.fn.stdpath('config')
 
 -- Значения по умолчанию
 local config = {
@@ -27,12 +28,18 @@ local config = {
 	count_recent = 20,
 	add_filter = false,		-- доп. фильтрация последних открытых файлов не из сессий
 	session_name = "/.session",
+	-- pinned = {
+	-- 	{"i", "~/.config/nvim/init.lua"},
+	-- 	{"c", "~/.config/nvim/lua/core/options.lua"},
+	-- 	{"m", "~/.config/nvim/lua/core/keymaps.lua"},
+	-- 	-- {"l", "~/.config/nvim/lua/core/lsp.lua"},
+	-- 	{"s", "~/.config/nvim/.session"},
+	-- }
 	pinned = {
-		{"i", "~/.config/nvim/init.lua"},
-		{"c", "~/.config/nvim/lua/core/options.lua"},
-		{"m", "~/.config/nvim/lua/core/keymaps.lua"},
-		-- {"l", "~/.config/nvim/lua/core/lsp.lua"},
-		{"s", "~/.config/nvim/.session"},
+		{"i", stdpath .. "/init.lua"},
+		{"c", stdpath .. "/options.lua"},
+		{"m", stdpath .. "/keymaps.lua"},
+		{"s", stdpath .. "/.session"},
 	}
 }
 
@@ -119,7 +126,8 @@ function M.start()
 
 	-- Заполняем массив сессий
 	local dir_sessions = {}
-	local file = io.open(vim.fn.expand("~/.config/nvim"..config.session_name), "r")
+	-- local file = io.open(vim.fn.expand("~/.config/nvim"..config.session_name), "r")
+	local file = io.open(vim.fn.expand(stdpath .. config.session_name), "r")
 	if file then
 		for line in file:lines() do
 			table.insert(dir_sessions, line)
