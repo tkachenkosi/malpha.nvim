@@ -227,6 +227,13 @@ function M.start()
 		default = true,   -- наследовать отсутствующие атрибуты
 	})
 
+	-- устанавливаем hl для сессий
+	vim.api.nvim_set_hl(0, "HlDashSess", {
+		fg = "#d68082",      -- GUI цвет
+		ctermfg = 180,       -- Терминальный цвет
+		default = true,   -- наследовать отсутствующие атрибуты
+	})
+
 	vim.api.nvim_set_hl(0, "HlDashTitle", {
 		fg = config.color_title,
 		ctermfg = 180,
@@ -251,7 +258,6 @@ function M.start()
 		local last_slash_pos = line:find("/[^/]*$")
 
 		if last_slash_pos then
-
 			-- Выделяем путь ДО имени файла (от начала до последнего слэша)
 			vim.api.nvim_buf_set_extmark(
 				buf,           -- номер буфера
@@ -265,6 +271,16 @@ function M.start()
 					hl_eol = false,        -- не подсвечивать до конца строки
 				})
 
+			-- выделить первый символ у сессии
+			if string.sub(line, 1, 1) == ":" then
+				vim.api.nvim_buf_set_extmark(buf,	ns,	i - 1, 0,
+					{
+						end_row = i - 1,
+						end_col = 0,
+						hl_group = "HlDashSess",
+						hl_eol = false,
+					})
+			end
 		end
 	end
 
