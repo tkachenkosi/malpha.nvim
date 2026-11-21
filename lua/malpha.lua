@@ -248,9 +248,9 @@ function M.start()
 		default = true,
 	})
 
+	start_sess_line =start_sess_line + 4
+	end_sess_line = end_sess_line + 4
 	local function getHL(i)
-		start_sess_line =start_sess_line + 4
-		end_sess_line = end_sess_line + 4
 		if i >= start_sess_line and i <= end_sess_line then
 			return "HlDashSess"
 		end
