@@ -188,7 +188,7 @@ function M.start()
 	-- 	end
 	--  end
 
-	local added_count = 0
+	local added_count, start_sess_line, end_sess_line = 0
 	for _, f in ipairs(vim.v.oldfiles or {}) do
 		if added_count >= config.count_recent then
       break
@@ -201,11 +201,15 @@ function M.start()
 		end
 	end
   table.insert(lines, "")
+	added_count = added_count + 1
+	start_sess_line = added_count
 
 	-- 2. Добавление сессий в lines
   for _, dir in ipairs(dir_sessions) do
     table.insert(lines, string.format(": %s", dir))
+		added_count = added_count + 1
   end
+	end_sess_line = added_count
   table.insert(lines, "")
 
   -- 3. Закреплённые
@@ -224,6 +228,12 @@ function M.start()
 		ctermfg = 180,       -- Терминальный цвет
 		default = true,   -- наследовать отсутствующие атрибуты
 	})
+	-- цвет для сессий
+	vim.api.nvim_set_hl(0, "HlDashSess", {
+		fg = "d68082",      -- GUI цвет
+		ctermfg = 180,       -- Терминальный цвет
+		default = true,   -- наследовать отсутствующие атрибуты
+	})
 
 	vim.api.nvim_set_hl(0, "HlDashTitle", {
 		fg = config.color_title,
@@ -237,6 +247,13 @@ function M.start()
 		ctermfg = 180,
 		default = true,
 	})
+
+	local function getHL(i)
+		if i >= start_sess_line and i <= end_sess_line then
+			return "HlDashSess"
+		end
+		return "HlDashPath"
+	end
 
 	-- Создаем namespace для хайлайтов
   local ns = vim.api.nvim_create_namespace("start_dashboard")
@@ -259,7 +276,7 @@ function M.start()
 				{
 					end_row = i - 1,       -- конечная строка
 					end_col = last_slash_pos, -- конечная колонка
-					hl_group = "HlDashPath", -- группа хайлайта
+					hl_group = getHL(i), -- группа хайлайта
 					hl_eol = false,        -- не подсвечивать до конца строки
 				})
 
