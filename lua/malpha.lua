@@ -113,8 +113,8 @@ end
 function M.start()
   -- Создаём новый буфер
   vim.cmd("enew")
-  -- local buf = vim.api.nvim_get_current_buf()
-	local buf = vim.api.nvim_create_buf(false, true)
+  local buf = vim.api.nvim_get_current_buf()
+	-- local buf = vim.api.nvim_create_buf(false, true)
 
   -- Настраиваем его как "специальный"
   vim.bo[buf].buftype = "nofile"
