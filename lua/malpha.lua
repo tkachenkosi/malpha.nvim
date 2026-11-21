@@ -188,7 +188,7 @@ function M.start()
 	-- 	end
 	--  end
 
-	local added_count, start_sess_line, end_sess_line = 0, 4, 0
+	local added_count, start_sess_line, end_sess_line = 0, 0, 0
 	for _, f in ipairs(vim.v.oldfiles or {}) do
 		if added_count >= config.count_recent then
       break
@@ -249,6 +249,8 @@ function M.start()
 	})
 
 	local function getHL(i)
+		start_sess_line =start_sess_line + 4
+		end_sess_line = end_sess_line + 4
 		if i >= start_sess_line and i <= end_sess_line then
 			return "HlDashSess"
 		end
