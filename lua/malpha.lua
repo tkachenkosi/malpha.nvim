@@ -25,7 +25,7 @@ local config = {
 	footer = "© Tkachenkosi. 2025",
 	color_title = "#3b77b3",
 	color_footer = "#2f5e8c",
-	color_sess = "#d68082",		-- цвет первого символа сессии #9fbddf, если = "" выдиления не будет 
+	color_sess = "#9fbddf",		-- цвет первого символа сессии #d68082 #9fbddf, если = "" выдиления не будет 
 	count_recent = 20,
 	add_filter = false,		-- доп. фильтрация последних открытых файлов не из сессий
 	session_name = "/.session",
