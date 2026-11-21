@@ -113,7 +113,8 @@ end
 function M.start()
   -- Создаём новый буфер
   vim.cmd("enew")
-  local buf = vim.api.nvim_get_current_buf()
+  -- local buf = vim.api.nvim_get_current_buf()
+	local buf = vim.api.nvim_create_buf(false, true)
 
   -- Настраиваем его как "специальный"
   vim.bo[buf].buftype = "nofile"
@@ -127,7 +128,7 @@ function M.start()
 	-- Заполняем массив сессий
 	local dir_sessions = {}
 	-- local file = io.open(vim.fn.expand("~/.config/nvim"..config.session_name), "r")
-	local file = io.open(vim.fn.expand(stdpath .. config.session_name), "r")
+	local file = io.open(stdpath .. config.session_name, "r")
 	if file then
 		for line in file:lines() do
 			table.insert(dir_sessions, line)
