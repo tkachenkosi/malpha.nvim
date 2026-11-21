@@ -188,7 +188,7 @@ function M.start()
 	-- 	end
 	--  end
 
-	local added_count, start_sess_line, end_sess_line = 0
+	local added_count, start_sess_line, end_sess_line = 0, 4, 0
 	for _, f in ipairs(vim.v.oldfiles or {}) do
 		if added_count >= config.count_recent then
       break
