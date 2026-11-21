@@ -25,6 +25,7 @@ local config = {
 	footer = "© Tkachenkosi. 2025",
 	color_title = "#3b77b3",
 	color_footer = "#2f5e8c",
+	color_sess = "#d68082",		-- цвет первого символа сессии #9fbddf, если = "" выдиления не будет 
 	count_recent = 20,
 	add_filter = false,		-- доп. фильтрация последних открытых файлов не из сессий
 	session_name = "/.session",
@@ -229,9 +230,9 @@ function M.start()
 
 	-- устанавливаем hl для сессий
 	vim.api.nvim_set_hl(0, "HlDashSess", {
-		fg = "#d68082",      -- GUI цвет
-		ctermfg = 180,       -- Терминальный цвет
-		default = true,   -- наследовать отсутствующие атрибуты
+		fg = config.color_sess,
+		ctermfg = 180,
+		default = true,
 	})
 
 	vim.api.nvim_set_hl(0, "HlDashTitle", {
@@ -272,7 +273,7 @@ function M.start()
 				})
 
 			-- выделить первый символ у сессии
-			if string.sub(line, 1, 1) == ":" then
+			if #config.color_sess > 0 and string.sub(line, 1, 1) == ":" then
 				vim.api.nvim_buf_set_extmark(buf,	ns,	i - 1, 0,
 					{
 						end_row = i - 1,
