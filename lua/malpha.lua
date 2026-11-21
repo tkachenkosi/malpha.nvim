@@ -230,7 +230,7 @@ function M.start()
 	})
 	-- цвет для сессий
 	vim.api.nvim_set_hl(0, "HlDashSess", {
-		fg = "d68082",      -- GUI цвет
+		fg = "#d68082",      -- GUI цвет
 		ctermfg = 180,       -- Терминальный цвет
 		default = true,   -- наследовать отсутствующие атрибуты
 	})
