@@ -276,7 +276,7 @@ function M.start()
 				vim.api.nvim_buf_set_extmark(buf,	ns,	i - 1, 0,
 					{
 						end_row = i - 1,
-						end_col = 0,
+						end_col = 1,
 						hl_group = "HlDashSess",
 						hl_eol = false,
 					})
