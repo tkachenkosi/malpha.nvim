@@ -278,7 +278,7 @@ function M.start()
 				{
 					end_row = i - 1,       -- конечная строка
 					end_col = last_slash_pos, -- конечная колонка
-					hl_group = getHL(i), -- группа хайлайта
+					hl_group = getHL(i-1), -- группа хайлайта
 					hl_eol = false,        -- не подсвечивать до конца строки
 				})
 
