@@ -134,7 +134,7 @@ function M.start()
 		end
 		file:close()
 	else
-		table.insert(dir_sessions, "Ошибка: открытия файла для чтения "..config.session_name)
+		table.insert(dir_sessions, "Error: file cannot be opened for reading. " .. config.session_name)
 	end
 
 	-- Функция для проверки, принадлежит ли файл какому-либо проекту из sessions
