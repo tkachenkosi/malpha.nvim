@@ -134,7 +134,9 @@ function M.start()
 		end
 		file:close()
 	else
-		table.insert(dir_sessions, "Error: cannot open the file " .. config.session_name)
+		-- table.insert(dir_sessions, "Error: cannot open the file " .. config.session_name)
+		table.insert(dir_sessions, "Error: cannot open the file")
+		table.insert(dir_sessions,  stdpath .. config.session_name)
 	end
 
 	-- Функция для проверки, принадлежит ли файл какому-либо проекту из sessions
