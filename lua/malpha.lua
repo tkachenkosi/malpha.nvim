@@ -92,7 +92,12 @@ local function load_path()
 			-- local old_viminfo = vim.o.viminfo -- Сохраняем настройки
 			-- vim.o.viminfo = ""	-- ВРЕМЕННО отключаем запись в историю
       vim.api.nvim_set_current_dir(dir)
-			vim.cmd("source "..string.sub(config.session_name, 2))
+			-- Безопастный source
+      local ok, err = pcall(function() vim.cmd("source " .. string.sub(config.session_name, 2)) end)
+      if not ok then
+        vim.notify("Error load session: " .. err, vim.log.levels.ERROR)
+      end
+			-- vim.cmd("source "..string.sub(config.session_name, 2))
 			-- vim.o.viminfo = old_viminfo
 		end
 	elseif f == "~" or f == "/" then
@@ -196,8 +201,7 @@ function M.start()
     end
 
 		local sf = file_shorten_path(f)
-		-- if not is_file_in_sessions(sf) and ifFileExist(f) then
-		if not is_file_in_sessions(sf) then
+		if not is_file_in_sessions(sf) and ifFileExist(f) then
 			table.insert(lines, sf)
 	 		added_count = added_count + 1
 		end
