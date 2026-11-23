@@ -17,7 +17,7 @@ local M = {}
 -- })
 
 local v = vim.version()
-local stdpath = vim.fn.stdpath('config')
+local config_dir = vim.fn.stdpath('config')
 
 -- Значения по умолчанию
 local config = {
@@ -37,10 +37,10 @@ local config = {
 	-- 	{"s", "~/.config/nvim/.session"},
 	-- }
 	pinned = {
-		{"i", stdpath .. "/init.lua"},
-		{"c", stdpath .. "/options.lua"},
-		{"m", stdpath .. "/keymaps.lua"},
-		{"s", stdpath .. "/.session"},
+		{"i", config_dir .. "/init.lua"},
+		{"c", config_dir .. "/options.lua"},
+		{"m", config_dir .. "/keymaps.lua"},
+		{"s", config_dir .. "/.session"},
 	}
 }
 
@@ -129,7 +129,7 @@ function M.start()
 	-- Заполняем массив сессий
 	local dir_sessions = {}
 	-- local file = io.open(vim.fn.expand("~/.config/nvim"..config.session_name), "r")
-	local file = io.open(stdpath .. config.session_name, "r")
+	local file = io.open(config_dir .. config.session_name, "r")
 	if file then
 		for line in file:lines() do
 			table.insert(dir_sessions, line)
@@ -138,7 +138,7 @@ function M.start()
 	else
 		-- table.insert(dir_sessions, "Error: cannot open the file " .. config.session_name)
 		table.insert(dir_sessions, "Error: cannot open the file")
-		table.insert(dir_sessions,  stdpath .. config.session_name)
+		table.insert(dir_sessions,  config_dir .. config.session_name)
 	end
 
 	-- Функция для проверки, принадлежит ли файл какому-либо проекту из sessions
@@ -264,7 +264,7 @@ function M.start()
 				buf,           -- номер буфера
 				ns,				     -- namespace
 				i - 1,         -- строка (0-based)
-				0,             -- колонка начала
+				1,             -- колонка начала
 				{
 					end_row = i - 1,       -- конечная строка
 					end_col = last_slash_pos, -- конечная колонка
@@ -274,7 +274,7 @@ function M.start()
 
 			-- выделить первый символ у сессии
 			if #config.color_sess > 0 and string.sub(line, 1, 1) == ":" then
-				vim.api.nvim_buf_set_extmark(buf,	ns,	i - 1, 0,
+				vim.api.nvim_buf_set_extmark(buf,	ns,	i - 1, 1,
 					{
 						end_row = i - 1,
 						end_col = 1,
