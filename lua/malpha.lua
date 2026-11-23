@@ -196,7 +196,8 @@ function M.start()
     end
 
 		local sf = file_shorten_path(f)
-		if not is_file_in_sessions(sf) and ifFileExist(f) then
+		-- if not is_file_in_sessions(sf) and ifFileExist(f) then
+		if not is_file_in_sessions(sf) then
 			table.insert(lines, sf)
 	 		added_count = added_count + 1
 		end
@@ -281,15 +282,6 @@ function M.start()
 						hl_eol = false,
 					})
 			end
-			if #config.color_sess > 0 and string.sub(line, 1, 1) == "[" then
-				vim.api.nvim_buf_set_extmark(buf,	ns,	i - 1, 1,	{
-						end_row = i - 1,
-						end_col = 2,
-						hl_group = "HlDashSess",
-						hl_eol = false,
-					})
-			end
-
 		end
 	end
 
