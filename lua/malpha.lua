@@ -264,7 +264,7 @@ function M.start()
 				buf,           -- номер буфера
 				ns,				     -- namespace
 				i - 1,         -- строка (0-based)
-				1,             -- колонка начала
+				0,             -- колонка начала
 				{
 					end_row = i - 1,       -- конечная строка
 					end_col = last_slash_pos, -- конечная колонка
@@ -274,7 +274,7 @@ function M.start()
 
 			-- выделить первый символ у сессии
 			if #config.color_sess > 0 and string.sub(line, 1, 1) == ":" then
-				vim.api.nvim_buf_set_extmark(buf,	ns,	i - 1, 1,
+				vim.api.nvim_buf_set_extmark(buf,	ns,	i - 1, 0,
 					{
 						end_row = i - 1,
 						end_col = 1,
