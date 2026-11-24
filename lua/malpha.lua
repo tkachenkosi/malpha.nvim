@@ -95,7 +95,6 @@ local function load_path()
 		else
 			dir = vim.fn.expand((string.sub(line, 3):gsub("%s+$", "")))
 		end
-		print(dir)
     if file_exists(dir..config.session_name) then
 			-- local old_viminfo = vim.o.viminfo -- Сохраняем настройки
 			-- vim.o.viminfo = ""	-- ВРЕМЕННО отключаем запись в историю
