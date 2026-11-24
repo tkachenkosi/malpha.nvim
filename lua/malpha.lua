@@ -87,7 +87,14 @@ local function load_path()
 	local line = vim.api.nvim_get_current_line()
 	local f =	string.sub(line, 1, 1)
 	if f == ":" then
-		local dir =	vim.fn.expand(string.sub(line, 3))
+		-- загружаем сессию
+		local dir
+		local n = line:find("--", 1, true)		-- есть комментарий для этой сессии
+		if n then
+			dir = vim.fn.expand((string.sub(line, 3, n):gsub("%s+$", "")))
+		else
+			dir = vim.fn.expand((string.sub(line, 3):gsub("%s+$", "")))
+		end
     if file_exists(dir..config.session_name) then
 			-- local old_viminfo = vim.o.viminfo -- Сохраняем настройки
 			-- vim.o.viminfo = ""	-- ВРЕМЕННО отключаем запись в историю
