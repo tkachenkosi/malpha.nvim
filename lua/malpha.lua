@@ -91,7 +91,7 @@ local function load_path()
 		local dir
 		local n = line:find("--", 1, true)		-- есть комментарий для этой сессии
 		if n then
-			dir = vim.fn.expand((string.sub(line, 3, n):gsub("%s+$", "")))
+			dir = vim.fn.expand((string.sub(line, 3, n-1):gsub("%s+$", "")))
 		else
 			dir = vim.fn.expand((string.sub(line, 3):gsub("%s+$", "")))
 		end
