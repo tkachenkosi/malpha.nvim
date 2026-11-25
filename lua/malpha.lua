@@ -165,8 +165,17 @@ function M.start()
 				return true
 			end
 			for _, dir in ipairs(dir_sessions) do
+				-- убираем коментарий
+				local n = dir:find("--", 1, true)		-- есть комментарий для этой сессии
+				local sdir
+				if n then
+					sdir = (string.sub(dir, 3, n-1):gsub("%s+$", ""))
+				else
+					sdir = (string.sub(dir, 3):gsub("%s+$", ""))
+				end
+
 				-- Проверяем, содержится ли короткий путь файла в путях сессий
-				if string.find(file_path, dir, 1, true) then
+				if string.find(file_path, sdir, 1, true) then
 					return true
 				end
 			end
