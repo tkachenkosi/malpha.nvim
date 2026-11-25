@@ -301,6 +301,17 @@ function M.start()
 						hl_group = "HlDashSess",
 						hl_eol = false,
 					})
+
+					-- подсвечиваем коментарии
+					local n = line:find("--", 1, true)		-- есть комментарий для этой сессии
+					if n then
+						vim.api.nvim_buf_set_extmark(buf,	ns,	i - 1, n - 1,	{
+								end_row = i - 1,
+								end_col = #line,
+								hl_group = "HlDashPath",
+								hl_eol = false,
+							})
+					end
 			end
 		end
 	end
